@@ -31,14 +31,29 @@ var lookupApp = new Vue({
     keywords: [], // Search string split into keywords
     wasteData: WASTE_DATA_JSON, // Waste lookup data
     filteredResults: [], // Results filtered by keywords
-    favourites: [], // List of favourite results (title strings)
+    favourites: [], // Array of favourite results (title strings)
     favouriteResults: [] // Results filtered by favourites
+  },
+
+  // Mounted handles loading values from local storage
+  mounted() {
+    if (localStorage.getItem('favourites')) {
+      // Attempt parsing values with JSON
+      try {
+        this.favourites = JSON.parse(localStorage.getItem('favourites'));
+        // If successful, filter favourites
+        this.favouriteResults = this.filterFavouriteResults();
+      } catch (e) {
+        // If there was an error, remove the stored array
+        localStorage.removeItem('favourites');
+      }
+    }
   },
 
   // Methods accessible in the app
   methods: {
     // Called on submission of the search form
-    // Creates the keywords list and filters results
+    // Creates the keywords array and filters results
     searchWaste: function () {
       if (this.searchString === '') {
         // Empty search resets keywords
@@ -65,16 +80,18 @@ var lookupApp = new Vue({
     // Called after keywords changes
     // Filters the results based on the keywords
     filterResults: function () {
-      // Empty list if search is empty
+      // Empty array if search is empty
       if (this.searchString === '') {
         return [];
       }
 
+      const keywords = this.keywords; // define keys in this scope
+
       // Otherwise filter based on keywords
       return this.wasteData.filter(function (wasteElement) {
         // Loop through keywords
-        for (const keyword of lookupApp.keywords) {
-          // Return false if a keyword is not found in title or keywords list
+        for (const keyword of keywords) {
+          // Return false if a keyword is not found in title or keywords array
           if (!wasteElement.keywords.toLowerCase().includes(keyword) &&
               !wasteElement.title.toLowerCase().includes(keyword)) {
             return false;
@@ -87,17 +104,27 @@ var lookupApp = new Vue({
     },
 
     // Determines if element is a favourite
-    isFavourite: function(wasteTitle) {
+    isFavourite: function (wasteTitle) {
       return this.favourites.includes(wasteTitle);
     },
 
     // Toggles the element as a favourite
-    toggleFavourite: function(wasteTitle) {
+    toggleFavourite: function (wasteTitle) {
       if (this.isFavourite(wasteTitle)) {
         this.removeFromFavourites(wasteTitle);
       } else {
         this.addToFavourites(wasteTitle);
       }
+
+      // Save favourites to local storage
+      this.saveFavourites();
+    },
+
+    // Saves the favourite elements in local storage
+    saveFavourites: function () {
+      // Parse the array into a JSON string
+      const parsed = JSON.stringify(this.favourites);
+      localStorage.setItem('favourites', parsed);
     },
 
     // Adds the clicked element to favourites and filters favourites
@@ -123,21 +150,23 @@ var lookupApp = new Vue({
     // Called after favourites changes
     // Filters the favourited results based on the favourites
     filterFavouriteResults: function () {
-      // Empty list if favourites is empty
+      // Empty array if favourites is empty
       if (this.favourites.length === 0) {
         return [];
       }
 
+      const favourites = this.favourites; // define keys in this scope
+
       // Otherwise filter based on favourites
       return this.wasteData.filter(function (wasteElement) {
         // Loop through favourites
-        for (const favourite of lookupApp.favourites) {
+        for (const favourite of favourites) {
           // Return element if it matches the favourite
           if (wasteElement.title === favourite) {
             return wasteElement;
           }
         }
       });
-    },
+    }
   }
 });
