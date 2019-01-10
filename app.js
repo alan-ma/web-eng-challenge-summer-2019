@@ -15,10 +15,14 @@ var decodeHTML = function (input) {
   }
 };
 
-// Decode all descriptions of data
-for (var wasteElement of WASTE_DATA_JSON) {
-  wasteElement.body = decodeHTML(wasteElement.body);
-}
+
+// Parse data and decode the descriptions
+var parseData = function (wasteData) {
+  for (var wasteElement of wasteData) {
+    wasteElement.body = decodeHTML(wasteElement.body);
+  }
+};
+
 
 // Define the main Vue application
 var lookupApp = new Vue({
@@ -29,25 +33,27 @@ var lookupApp = new Vue({
   data: {
     searchString: '', // Search bar input
     keywords: [], // Search string split into keywords
-    wasteData: WASTE_DATA_JSON, // Waste lookup data
+    wasteData: [], // Waste lookup data
     filteredResults: [], // Results filtered by keywords
     favourites: [], // Array of favourite results (title strings)
-    favouriteResults: [] // Results filtered by favourites
+    favouriteResults: [], // Results filtered by favourites
+    loading: true // Loading boolean
   },
 
-  // Mounted handles loading values from local storage
+  // Mounted handles loading values
   mounted() {
-    if (localStorage.getItem('favourites')) {
-      // Attempt parsing values with JSON
-      try {
-        this.favourites = JSON.parse(localStorage.getItem('favourites'));
-        // If successful, filter favourites
-        this.favouriteResults = this.filterFavouriteResults();
-      } catch (e) {
-        // If there was an error, remove the stored array
-        localStorage.removeItem('favourites');
-      }
-    }
+    // Get data from Waste Wizard using Axios (Promise-based HTTP client)
+    axios
+      .get('https://secure.toronto.ca/cc_sr_v1/data/swm_waste_wizard_APR?limit=1000')
+      .then(response => {
+        // Parse the data from the API
+        this.wasteData = response.data;
+        parseData(this.wasteData);
+
+        // Get favourites from local storage
+        this.retrieveFavourites();
+        this.loading = false;
+      });
   },
 
   // Methods accessible in the app
@@ -125,6 +131,21 @@ var lookupApp = new Vue({
       // Parse the array into a JSON string
       const parsed = JSON.stringify(this.favourites);
       localStorage.setItem('favourites', parsed);
+    },
+
+    // Retrieves the favourite elements from local storage
+    retrieveFavourites: function () {
+      if (localStorage.getItem('favourites')) {
+        // Attempt parsing values with JSON
+        try {
+          this.favourites = JSON.parse(localStorage.getItem('favourites'));
+          // If successful, filter favourites
+          this.favouriteResults = this.filterFavouriteResults();
+        } catch (e) {
+          // If there was an error, remove the stored array
+          localStorage.removeItem('favourites');
+        }
+      }
     },
 
     // Adds the clicked element to favourites and filters favourites

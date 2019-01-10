@@ -11,40 +11,59 @@
     <h1 class="title">Toronto Waste Lookup</h1>
   </div>
 
-  <!-- Search bar -->
-  <div class="search-container">
-    <!-- A form that calls searchWaste on submit -->
-    <!-- Note: .prevent removes the default page refresh -->
-    <form id="search-form" @submit.prevent="searchWaste">
-      <input v-model="searchString" v-on:keyup="checkEmpty">
-      <input type="submit">
-    </form>
-  </div>
+  <!-- Content -->
+  <div v-if="!loading">
+    <!-- Search bar -->
+    <div class="search-container">
+      <!-- A form that calls searchWaste on submit -->
+      <!-- Note: .prevent removes the default page refresh -->
+      <form id="search-form" @submit.prevent="searchWaste">
+        <input v-model="searchString" v-on:keyup="checkEmpty">
+        <input type="submit">
+      </form>
+    </div>
 
-  <!-- Search results -->
-  <div class="results-container">
-    <!-- Loops over results in the filtered list -->
-    <waste-result
-      v-for="result in filteredResults"
-      v-bind:result="result"
-      v-bind:isfavourite="isFavourite(result.title)"
-      v-on:toggle-favourite="toggleFavourite(result.title)">
-    </waste-result>
-  </div>
+    <!-- Search results -->
+    <div class="results-container">
+      <div v-if="filteredResults.length === 0">
+        <p class="message">
+          Type keywords into the search bar to lookup waste!
+        </p>
+      </div>
+      <!-- Loops over results in the filtered list -->
+      <waste-result
+        v-for="result in filteredResults"
+        v-bind:result="result"
+        v-bind:isfavourite="isFavourite(result.title)"
+        v-on:toggle-favourite="toggleFavourite(result.title)">
+      </waste-result>
+    </div>
 
-  <!-- Favourites list -->
-  <div class="favourites-container">
-    <h1>Favourites</h1>
-    <!-- Loops over results in the favourites list -->
-    <waste-result
-      v-for="favourite in favouriteResults"
-      v-bind:result="favourite"
-      v-bind:isfavourite="isFavourite(favourite.title)"
-      v-on:toggle-favourite="toggleFavourite(favourite.title)">
-    </waste-result>
+    <!-- Favourites list -->
+    <div class="favourites-container">
+      <h1>Favourites</h1>
+      <div v-if="favouriteResults.length === 0">
+        <p class="message">
+          Click on the grey star beside a search result to add it to your favourites!
+        </p>
+      </div>
+      <!-- Loops over results in the favourites list -->
+      <waste-result
+        v-for="favourite in favouriteResults"
+        v-bind:result="favourite"
+        v-bind:isfavourite="isFavourite(favourite.title)"
+        v-on:toggle-favourite="toggleFavourite(favourite.title)">
+      </waste-result>
+    </div>
+  </div>
+  <div v-else class="loading-container">
+    <div class="loading">Loading...</div>
   </div>
 </div>
 
+
+<!-- Axios - Promise based HTTP client -->
+<script src="axios.min.js"></script>
 
 <!-- Vue.js - production version, optimized for size and speed -->
 <script src="vue.min.js"></script>

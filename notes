@@ -11,6 +11,7 @@ challenges/points of note:
     
     data retrieved from API:
         there wasn't an API so I opted to retrieve the entire set of data on loading of the application
+            used axios to make api call
         the descriptions were transferred as safe text, so it had to be parsed (twice)
             the process utilized the browser's rendering engine, it may be unsafe if the API returns unsafe HTML
             https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
