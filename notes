@@ -11,10 +11,14 @@ challenges/points of note:
     
     data retrieved from API:
         there wasn't an API so I opted to retrieve the entire set of data on loading of the application
-        the descriptions were trasferred as safe text, so it had to be parsed
+        the descriptions were transferred as safe text, so it had to be parsed (twice)
             the process utilized the browser's rendering engine, it may be unsafe if the API returns unsafe HTML
             https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
         but it was the best solution that didn't include preprocessing an offline version
+    
+    star icon:
+        opted not to include all of font awesome for a single star
+        instead used an inline svg
 
     
 

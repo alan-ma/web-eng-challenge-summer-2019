@@ -1,0 +1,9 @@
+
+.star {
+  height: 20px;
+  width: 20px;
+}
+
+.star.favourite {
+  color: green;
+}

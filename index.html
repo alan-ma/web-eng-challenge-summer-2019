@@ -5,7 +5,6 @@
 <!-- Main stylesheet -->
 <link rel="stylesheet" href="default.css">
 
-
 <div id="lookup-app" class="container">
   <!-- Header -->
   <div class="title-container">
@@ -20,21 +19,29 @@
       <input v-model="searchString" v-on:keyup="checkEmpty">
       <input type="submit">
     </form>
-
   </div>
 
   <!-- Search results -->
   <div class="results-container">
     <!-- Loops over results in the filtered list -->
-    <div v-for="result in filteredResults">
-      <div class="result-title">
-        <p>{{ result.title }}</p>
-      </div>
+    <waste-result
+      v-for="result in filteredResults"
+      v-bind:result="result"
+      v-bind:isfavourite="isFavourite(result.title)"
+      v-on:toggle-favourite="toggleFavourite(result.title)">
+    </waste-result>
+  </div>
 
-      <div class="result-body" v-html="result.body">
-        <!-- v-html displays the raw HTML -->
-      </div>
-    </div>
+  <!-- Favourites list -->
+  <div class="favourites-container">
+    <h1>Favourites</h1>
+    <!-- Loops over results in the favourites list -->
+    <waste-result
+      v-for="favourite in favouriteResults"
+      v-bind:result="favourite"
+      v-bind:isfavourite="isFavourite(favourite.title)"
+      v-on:toggle-favourite="toggleFavourite(favourite.title)">
+    </waste-result>
   </div>
 </div>
 
@@ -44,6 +51,9 @@
 
 <!-- TESTING DATA -->
 <script src="swm_waste_wizard_APR.js"></script>
+
+<!-- Waste result component (should come before main application) -->
+<script src="waste-result.js"></script>
 
 <!-- Main application script -->
 <script src="app.js"></script>

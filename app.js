@@ -27,10 +27,12 @@ var lookupApp = new Vue({
 
   // Variables accessible in the app
   data: {
-    searchString: '',
-    keywords: [],
-    wasteData: WASTE_DATA_JSON,
-    filteredResults: []
+    searchString: '', // Search bar input
+    keywords: [], // Search string split into keywords
+    wasteData: WASTE_DATA_JSON, // Waste lookup data
+    filteredResults: [], // Results filtered by keywords
+    favourites: [], // List of favourite results (title strings)
+    favouriteResults: [] // Results filtered by favourites
   },
 
   // Methods accessible in the app
@@ -74,7 +76,7 @@ var lookupApp = new Vue({
         for (const keyword of lookupApp.keywords) {
           // Return false if a keyword is not found in title or keywords list
           if (!wasteElement.keywords.toLowerCase().includes(keyword) &&
-            !wasteElement.title.toLowerCase().includes(keyword)) {
+              !wasteElement.title.toLowerCase().includes(keyword)) {
             return false;
           }
         }
@@ -82,6 +84,60 @@ var lookupApp = new Vue({
         // All keywords are present
         return wasteElement;
       });
-    }
+    },
+
+    // Determines if element is a favourite
+    isFavourite: function(wasteTitle) {
+      return this.favourites.includes(wasteTitle);
+    },
+
+    // Toggles the element as a favourite
+    toggleFavourite: function(wasteTitle) {
+      if (this.isFavourite(wasteTitle)) {
+        this.removeFromFavourites(wasteTitle);
+      } else {
+        this.addToFavourites(wasteTitle);
+      }
+    },
+
+    // Adds the clicked element to favourites and filters favourites
+    addToFavourites: function (wasteTitle) {
+      this.favourites.push(wasteTitle);
+      // Filter favourites
+      this.favouriteResults = this.filterFavouriteResults();
+    },
+
+    // Removes the clicked element from favourites and filters favourites
+    removeFromFavourites: function (wasteTitle) {
+      // Loops over favourites and removes the correct element
+      for (var i = 0; i < this.favourites.length; i++) {
+        if (wasteTitle === this.favourites[i]) {
+          // Use splice to remove element at i-th index
+          this.favourites.splice(i, 1);
+          // Filter favourites
+          this.favouriteResults = this.filterFavouriteResults();
+        }
+      }
+    },
+
+    // Called after favourites changes
+    // Filters the favourited results based on the favourites
+    filterFavouriteResults: function () {
+      // Empty list if favourites is empty
+      if (this.favourites.length === 0) {
+        return [];
+      }
+
+      // Otherwise filter based on favourites
+      return this.wasteData.filter(function (wasteElement) {
+        // Loop through favourites
+        for (const favourite of lookupApp.favourites) {
+          // Return element if it matches the favourite
+          if (wasteElement.title === favourite) {
+            return wasteElement;
+          }
+        }
+      });
+    },
   }
 });
