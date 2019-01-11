@@ -18,16 +18,19 @@ p {
 /* Font override for <p> with defined styles in the database */
 p.result-body p {
   font-size: 1em !important;
+  font-family: "sfns_displayregular" !important;
 }
 
 /* Font override for <li> with defined styles in the database */
 p.result-body li {
   font-size: 1em !important;
+  font-family: "sfns_displayregular" !important;
 }
 
 /* Font override for <span> with defined styles in the database */
 p.result-body span {
   font-size: 1em !important;
+  font-family: "sfns_displayregular" !important;
 }
 
 ul {
