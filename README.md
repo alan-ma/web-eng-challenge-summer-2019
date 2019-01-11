@@ -10,7 +10,7 @@ Here, I highlight the steps I took to complete the challenge and some of the thi
 ## Framework Choice – Vue.js
 Since this is a fairly small application, I was looking for a lightweight framework that would still allow for dynamic elements and templates. [Vue.js](https://vuejs.org) was easy and fun to work with; I was able to build the application quickly and without much overhead in settings, modules, etc.
 
-The end result ended up having a lot of code in very few files – I could have used the Vue CLI and its Single File Components to split up the application. However, in the interest of speed and simplicity, I settled for this drawback and had [index.html](index.html) and [app.js](app.js) housing most of the code.
+The end result ended up having a lot of code in very few files – I could have used the Vue CLI and its Single File Components to split up the application. However, in the interest of speed and simplicity, I settled for this drawback and had [index.html](index.html) and [app.js](scripts/app.js) housing most of the code.
 
 ## Using Local Data
 The first step was to download the [Toronto Waste Wizard database](https://www.toronto.ca/city-government/data-research-maps/open-data/open-data-catalogue/#5ed40494-a290-7807-d5da-09ab6a56fca2) as a JSON file, then start working with that as a local file.
@@ -32,7 +32,7 @@ The first step of parsing took a while to figure out, since I couldn't see a way
 ## Favourite Elements
 This was fairly simple to implement since it was essentially another filtered list. I decided to track the titles of the favourited posts (which lacked IDs), and stored those in Local Storage.
 
-At this point I basically had repeat code in the HTML, since the list of results and list of favourites was essentially the same. Thus, I converted that portion into a component [waste-result.js](waste-result.js) and it made things a lot cleaner.
+At this point I basically had repeat code in the HTML, since the list of results and list of favourites was essentially the same. Thus, I converted that portion into a component [scripts/waste-result.js](waste-result.js) and it made things a lot cleaner.
 
 ## SVGs and Font
 At this point I could start worrying about the looks of the page. At first, I wanted to use [Font Awesome](https://fontawesome.com) for the icons, but then realized I didn't want to load the entire library for one or two icons. The next best solution was to take the SVGs directly and include them into the HTML.
