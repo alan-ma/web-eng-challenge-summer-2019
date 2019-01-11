@@ -121,7 +121,7 @@ var lookupApp = new Vue({
 
       this.filteredResults = this.filterResults();
 
-      if (this.filteredResults.length === 0) {
+      if (this.filteredResults.length === 0 && this.searchString !== '') {
         // Set message to no results
         this.message = 'No results. Try keywords like "cardboard" and "takeout".';
       }
