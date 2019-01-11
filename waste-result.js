@@ -15,9 +15,9 @@ Vue.component('waste-result', {
       <p>{{ result.title }}</p>
     </div>
 
-    <div class="result-body" v-html="result.body">
+    <p class="result-body" v-html="result.body">
       <!-- v-html displays the raw HTML -->
-    </div>
+    </p>
   </div>
   `
 });

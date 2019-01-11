@@ -6,10 +6,13 @@ html, body {
 }
 
 p, li, input {
-  font-size: 1.5em;
   font-family: "sfns_displayregular";
   color: #444;
   margin: 0;
+}
+
+p {
+  font-size: 1.5em;
 }
 
 ul {

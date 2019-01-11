@@ -30,8 +30,8 @@
   <!-- Search results -->
   <div v-if="!loading" class="results-container">
     <div v-if="filteredResults.length === 0">
-      <p class="message">
-        Type keywords into the search bar to lookup waste!
+      <p>
+        {{ message || 'Type keywords into the search bar to lookup waste!' }}
       </p>
     </div>
     <!-- Loops over results in the filtered list -->

@@ -37,7 +37,8 @@ var lookupApp = new Vue({
     filteredResults: [], // Results filtered by keywords
     favourites: [], // Array of favourite results (title strings)
     favouriteResults: [], // Results filtered by favourites
-    loading: true // Loading boolean
+    loading: true, // Loading boolean
+    message: '' // Message to user
   },
 
   // Mounted handles loading values
@@ -64,6 +65,7 @@ var lookupApp = new Vue({
       if (this.searchString === '') {
         // Empty search resets keywords
         this.keywords = [];
+        this.message = ''; // Sets to default message
       } else {
         // Keywords are space-separated words in the search string
         this.keywords = this.searchString.toLowerCase().split(' ');
@@ -71,6 +73,11 @@ var lookupApp = new Vue({
       }
 
       this.filteredResults = this.filterResults();
+
+      if (this.filteredResults.length === 0) {
+        // Set message to no results
+        this.message = 'No results. Try keywords like "cardboard" and "takeout".';
+      }
     },
 
     // Called on change of the search input
@@ -80,6 +87,7 @@ var lookupApp = new Vue({
         // Empty search bar resets keywords and filtered results
         this.keywords = [];
         this.filteredResults = [];
+        this.message = ''; // Sets to default message
       }
     },
 
