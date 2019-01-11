@@ -1,6 +1,12 @@
+// A component used inside the Waste Lookup application
+// The main application loops over this element to display results
+// This element displays the waste disposal information
+// When the star is clicked, the component sends an event to the main app
+
+
 // Define a new component called waste-result
 Vue.component('waste-result', {
-  props: ['result', 'isfavourite'],
+  props: ['result', 'isfavourite'], // Information from the parent element
   template: `
   <div class="result-container">
     <div class="result-favourite">
@@ -11,14 +17,15 @@ Vue.component('waste-result', {
       </button>
     </div>
 
+    <!-- The title of the result -->
     <div class="result-title">
       <p>{{ result.title }}</p>
     </div>
 
+    <!-- The body of the result -->
     <p class="result-body" v-html="result.body">
-      <!-- v-html displays the raw HTML -->
+      <!-- v-html displays the raw HTML (second step of processing) -->
     </p>
   </div>
   `
 });
-

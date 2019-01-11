@@ -15,6 +15,21 @@ p {
   font-size: 1.5em;
 }
 
+/* Font override for <p> with defined styles in the database */
+p.result-body p {
+  font-size: 1em !important;
+}
+
+/* Font override for <li> with defined styles in the database */
+p.result-body li {
+  font-size: 1em !important;
+}
+
+/* Font override for <span> with defined styles in the database */
+p.result-body span {
+  font-size: 1em !important;
+}
+
 ul {
   margin: 0;
 }
@@ -162,7 +177,7 @@ h1, strong {
 }
 
 .result-body li {
-  margin-bottom: 15px
+  margin-bottom: 15px;
 }
 
 /* Favourites section styling */
@@ -251,7 +266,7 @@ h1, strong {
   }
 
   .result-body li {
-    margin-bottom: 10px
+    margin-bottom: 10px;
   }
 
   /* Favourites section styling */
@@ -332,7 +347,7 @@ h1, strong {
   }
 
   .result-body li {
-    margin-bottom: 8px
+    margin-bottom: 8px;
   }
 
   /* Favourites section styling */
@@ -413,7 +428,7 @@ h1, strong {
   }
 
   .result-body li {
-    margin-bottom: 5px
+    margin-bottom: 5px;
   }
 
   /* Favourites section styling */

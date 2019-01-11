@@ -1,12 +1,20 @@
+<!-- A web app to search for waste items using the Toronto Waste Wizard database. -->
+<!-- Created for Shopify's Summer 2019 Web Engineer Challenge. -->
+<!-- Author: Alan Ma -->
+
 <!DOCTYPE html>
 <meta charset="utf-8">
+<meta name="description" content="Toronto Waste Lookup: An application to search for waste items and their disposal methods. Created for Shopify's Summer 2019 Web Engineer Challenge.">
+<meta name="keywords" content="HTML,CSS,JavaScript,Vue,Shopify,Toronto,Waste">
+<meta name="author" content="Alan Ma">
+
 <title>Toronto Waste Lookup</title>
 
 <!-- Main stylesheet -->
-<link rel="stylesheet" href="default.css">
+<link rel="stylesheet" href="stylesheets/default.css">
 
 <!-- Open Sans Regular and Semi-Bold from Google Fonts -->
-<link href="fonts.css" rel="stylesheet">
+<link href="stylesheets/fonts.css" rel="stylesheet">
 
 <div id="lookup-app" class="container">
   <!-- Header -->
@@ -30,6 +38,7 @@
   <!-- Search results -->
   <div v-if="!loading" class="results-container">
     <div v-if="filteredResults.length === 0">
+      <!-- The message is either the default shown here or a custom message -->
       <p>
         {{ message || 'Type keywords into the search bar to lookup waste!' }}
       </p>
@@ -47,7 +56,7 @@
   <div v-if="!loading" class="favourites-container">
     <h1>Favourites</h1>
     <div v-if="favouriteResults.length === 0">
-      <p class="message">
+      <p>
         Click on the grey star beside a search result to add it to your favourites!
       </p>
     </div>
@@ -59,6 +68,7 @@
       v-on:toggle-favourite="toggleFavourite(favourite.title)">
     </waste-result>
   </div>
+  <!-- Loading message while getching data from API -->
   <div v-else class="loading-container">
     <div class="loading"><p>Loading...</p></div>
   </div>
@@ -66,16 +76,13 @@
 
 
 <!-- Axios - Promise based HTTP client -->
-<script src="axios.min.js"></script>
+<script src="third-party/axios.min.js"></script>
 
 <!-- Vue.js - production version, optimized for size and speed -->
-<script src="vue.min.js"></script>
-
-<!-- TESTING DATA -->
-<script src="swm_waste_wizard_APR.js"></script>
+<script src="third-party/vue.min.js"></script>
 
 <!-- Waste result component (should come before main application) -->
-<script src="waste-result.js"></script>
+<script src="scripts/waste-result.js"></script>
 
 <!-- Main application script -->
-<script src="app.js"></script>
+<script src="scripts/app.js"></script>

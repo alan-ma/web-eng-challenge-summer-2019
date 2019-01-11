@@ -1,6 +1,17 @@
+// The main body of the Waste Lookup application
+// There are four major parts to the app:
+//   1. Retrieving data from the API and parsing it accordingly
+//   2. Getting and saving favourites information from local storage
+//   3. Searching and filtering results from the data
+//   4. Adding and removing elemtents from the favourites list
 
 
+// PART 1 - API ACCESS
+
+
+// DecodeHTML
 // Decodes the encoded data from the API using the browser's engine
+// This is potentially unsafe with untrusted data
 // Referenced from:
 // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
 var decodeHTML = function (input) {
@@ -16,7 +27,9 @@ var decodeHTML = function (input) {
 };
 
 
+// ParseData
 // Parse data and decode the descriptions
+// This is the first step (out of two) of parsing the API data
 var parseData = function (wasteData) {
   for (var wasteElement of wasteData) {
     wasteElement.body = decodeHTML(wasteElement.body);
@@ -41,6 +54,10 @@ var lookupApp = new Vue({
     message: '' // Message to user
   },
 
+
+  // PART 2 - LOCAL STORAGE
+
+
   // Mounted handles loading values
   mounted() {
     // Get data from Waste Wizard using Axios (Promise-based HTTP client)
@@ -59,6 +76,36 @@ var lookupApp = new Vue({
 
   // Methods accessible in the app
   methods: {
+    // RetrieveFavourites
+    // Retrieves the favourite elements from local storage
+    retrieveFavourites: function () {
+      if (localStorage.getItem('favourites')) {
+        // Attempt parsing values with JSON
+        try {
+          this.favourites = JSON.parse(localStorage.getItem('favourites'));
+          // If successful, filter favourites
+          this.favouriteResults = this.filterFavouriteResults();
+        } catch (e) {
+          // If there was an error, remove the stored array
+          localStorage.removeItem('favourites');
+        }
+      }
+    },
+
+
+    // SaveFavourites
+    // Saves the favourite elements in local storage
+    saveFavourites: function () {
+      // Parse the array into a JSON string
+      const parsed = JSON.stringify(this.favourites);
+      localStorage.setItem('favourites', parsed);
+    },
+
+
+    // PART 3 - SEARCHING AND FILTERING
+
+
+    // SearchWaste
     // Called on submission of the search form
     // Creates the keywords array and filters results
     searchWaste: function () {
@@ -80,6 +127,8 @@ var lookupApp = new Vue({
       }
     },
 
+
+    // CheckEmpty
     // Called on change of the search input
     // If the search bar is empty, clear the results
     checkEmpty: function () {
@@ -91,6 +140,8 @@ var lookupApp = new Vue({
       }
     },
 
+
+    // FilterResults
     // Called after keywords changes
     // Filters the results based on the keywords
     filterResults: function () {
@@ -117,11 +168,18 @@ var lookupApp = new Vue({
       });
     },
 
+
+    // PART 4 - FAVOURITE ELEMENTS
+
+
+    // IsFavourite
     // Determines if element is a favourite
     isFavourite: function (wasteTitle) {
       return this.favourites.includes(wasteTitle);
     },
 
+
+    // ToggleFavourite
     // Toggles the element as a favourite
     toggleFavourite: function (wasteTitle) {
       if (this.isFavourite(wasteTitle)) {
@@ -134,28 +192,8 @@ var lookupApp = new Vue({
       this.saveFavourites();
     },
 
-    // Saves the favourite elements in local storage
-    saveFavourites: function () {
-      // Parse the array into a JSON string
-      const parsed = JSON.stringify(this.favourites);
-      localStorage.setItem('favourites', parsed);
-    },
 
-    // Retrieves the favourite elements from local storage
-    retrieveFavourites: function () {
-      if (localStorage.getItem('favourites')) {
-        // Attempt parsing values with JSON
-        try {
-          this.favourites = JSON.parse(localStorage.getItem('favourites'));
-          // If successful, filter favourites
-          this.favouriteResults = this.filterFavouriteResults();
-        } catch (e) {
-          // If there was an error, remove the stored array
-          localStorage.removeItem('favourites');
-        }
-      }
-    },
-
+    // AddToFavourites
     // Adds the clicked element to favourites and filters favourites
     addToFavourites: function (wasteTitle) {
       this.favourites.push(wasteTitle);
@@ -163,6 +201,8 @@ var lookupApp = new Vue({
       this.favouriteResults = this.filterFavouriteResults();
     },
 
+
+    // RemoveFromFavourites
     // Removes the clicked element from favourites and filters favourites
     removeFromFavourites: function (wasteTitle) {
       // Loops over favourites and removes the correct element
@@ -176,6 +216,8 @@ var lookupApp = new Vue({
       }
     },
 
+
+    // FilterFavouriteResults
     // Called after favourites changes
     // Filters the favourited results based on the favourites
     filterFavouriteResults: function () {

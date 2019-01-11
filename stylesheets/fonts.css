@@ -1,0 +1,18 @@
+/* This defines custom fonts for the application */
+/* Fonts from: https://github.com/supermarin/YosemiteSanFranciscoFont */
+
+@font-face {
+  font-family: 'sfns_displaybold';
+  src: url('../third-party/system_san_francisco_display_bold-webfont.woff2') format('woff2'),
+       url('../third-party/system_san_francisco_display_bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'sfns_displayregular';
+  src: url('../third-party/system_san_francisco_display_regular-webfont.woff2') format('woff2'),
+       url('../third-party/system_san_francisco_display_regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
