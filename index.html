@@ -5,59 +5,62 @@
 <!-- Main stylesheet -->
 <link rel="stylesheet" href="default.css">
 
+<!-- Open Sans Regular and Semi-Bold from Google Fonts -->
+<link href="fonts.css" rel="stylesheet">
+
 <div id="lookup-app" class="container">
   <!-- Header -->
   <div class="title-container">
     <h1 class="title">Toronto Waste Lookup</h1>
   </div>
 
-  <!-- Content -->
-  <div v-if="!loading">
-    <!-- Search bar -->
-    <div class="search-container">
-      <!-- A form that calls searchWaste on submit -->
-      <!-- Note: .prevent removes the default page refresh -->
-      <form id="search-form" @submit.prevent="searchWaste">
-        <input v-model="searchString" v-on:keyup="checkEmpty">
-        <input type="submit">
-      </form>
-    </div>
+  <!-- Search bar -->
+  <div v-if="!loading" class="search-container">
+    <!-- A form that calls searchWaste on submit -->
+    <!-- Note: .prevent removes the default page refresh -->
+    <form id="search-form" @submit.prevent="searchWaste">
+      <input v-model="searchString" v-on:keyup="checkEmpty">
+      <button type="submit">
+        <!-- Magnifying Glass SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" id="svg5" height="64px" width="64px" version="1.1" viewBox="0 0 32 32"><path style="stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none" d="M 19,3 C 13.488281,3 9,7.488281 9,13 c 0,2.394531 0.489844,4.589844 1.9,6.3125 L 2.5887203,28.11578 4.5763389,30.0535 13.0875,21.25 C 14.810156,22.660156 16.605469,23 19,23 24.511719,23 29,18.511719 29,13 29,7.488281 24.511719,3 19,3 Z m 0,2.75 c 4.429688,0 7.25,2.820313 7.25,7.25 0,4.429688 -2.820312,7.25 -7.25,7.25 -4.429687,0 -7.25,-2.820312 -7.25,-7.25 0,-4.429687 2.820313,-7.25 7.25,-7.25 z" id="path2" /></svg>
+      </button>
+    </form>
+  </div>
 
-    <!-- Search results -->
-    <div class="results-container">
-      <div v-if="filteredResults.length === 0">
-        <p class="message">
-          Type keywords into the search bar to lookup waste!
-        </p>
-      </div>
-      <!-- Loops over results in the filtered list -->
-      <waste-result
-        v-for="result in filteredResults"
-        v-bind:result="result"
-        v-bind:isfavourite="isFavourite(result.title)"
-        v-on:toggle-favourite="toggleFavourite(result.title)">
-      </waste-result>
+  <!-- Search results -->
+  <div v-if="!loading" class="results-container">
+    <div v-if="filteredResults.length === 0">
+      <p class="message">
+        Type keywords into the search bar to lookup waste!
+      </p>
     </div>
+    <!-- Loops over results in the filtered list -->
+    <waste-result
+      v-for="result in filteredResults"
+      v-bind:result="result"
+      v-bind:isfavourite="isFavourite(result.title)"
+      v-on:toggle-favourite="toggleFavourite(result.title)">
+    </waste-result>
+  </div>
 
-    <!-- Favourites list -->
-    <div class="favourites-container">
-      <h1>Favourites</h1>
-      <div v-if="favouriteResults.length === 0">
-        <p class="message">
-          Click on the grey star beside a search result to add it to your favourites!
-        </p>
-      </div>
-      <!-- Loops over results in the favourites list -->
-      <waste-result
-        v-for="favourite in favouriteResults"
-        v-bind:result="favourite"
-        v-bind:isfavourite="isFavourite(favourite.title)"
-        v-on:toggle-favourite="toggleFavourite(favourite.title)">
-      </waste-result>
+  <!-- Favourites list -->
+  <div v-if="!loading" class="favourites-container">
+    <h1>Favourites</h1>
+    <div v-if="favouriteResults.length === 0">
+      <p class="message">
+        Click on the grey star beside a search result to add it to your favourites!
+      </p>
     </div>
+    <!-- Loops over results in the favourites list -->
+    <waste-result
+      v-for="favourite in favouriteResults"
+      v-bind:result="favourite"
+      v-bind:isfavourite="isFavourite(favourite.title)"
+      v-on:toggle-favourite="toggleFavourite(favourite.title)">
+    </waste-result>
   </div>
   <div v-else class="loading-container">
-    <div class="loading">Loading...</div>
+    <div class="loading"><p>Loading...</p></div>
   </div>
 </div>
 
