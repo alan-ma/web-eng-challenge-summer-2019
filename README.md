@@ -32,7 +32,7 @@ The first step of parsing took a while to figure out, since I couldn't see a way
 ## Favourite Elements
 This was fairly simple to implement since it was essentially another filtered list. I decided to track the titles of the favourited posts (which lacked IDs), and stored those in Local Storage.
 
-At this point I basically had repeat code in the HTML, since the list of results and list of favourites was essentially the same. Thus, I converted that portion into a component [scripts/waste-result.js](waste-result.js) and it made things a lot cleaner.
+At this point I basically had repeat code in the HTML, since the list of results and list of favourites was essentially the same. Thus, I converted that portion into a component [waste-result.js](scripts/waste-result.js) and it made things a lot cleaner.
 
 ## SVGs and Font
 At this point I could start worrying about the looks of the page. At first, I wanted to use [Font Awesome](https://fontawesome.com) for the icons, but then realized I didn't want to load the entire library for one or two icons. The next best solution was to take the SVGs directly and include them into the HTML.
