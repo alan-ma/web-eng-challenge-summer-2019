@@ -26,7 +26,11 @@ challenges/points of note:
     font:
         the font looked like san francisco, so I used an adaptation of it
         https://github.com/supermarin/YosemiteSanFranciscoFont
-        
+    
+    css:
+        the one file is a little bit of a mess, and single file components definitely would have helped
+        it's also not mobile-first since max-width media queries
+            this is a result of trying to copy the desktop design first and fixing for responsive design later
 
     
 

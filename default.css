@@ -24,6 +24,8 @@ h1, strong {
   font-weight: normal;
 }
 
+/* Main wrapper for application */
+
 .container {
   min-height: 100%;
   display: flex;
@@ -47,7 +49,7 @@ h1, strong {
   font-size: 3.4em;
 }
 
-/* Container styling */
+/* Container styling for sub-sections */
 
 .search-container, .results-container,
 .favourites-container, .loading-container {
@@ -68,25 +70,30 @@ h1, strong {
   box-sizing: border-box;
 }
 
+/* Ensuring same font size for input and button for consistency */
+.search-container input, .search-container button {
+  font-size: 1.7em;
+}
+
 .search-container input {
   width: 100%;
   padding: 14px 14px 8px;
   border: 2px solid #bbb;
   border-radius: 3px;
-  font-size: 1.7em;
   height: 2.9em;
   box-sizing: border-box;
 }
 
+/* Search button */
+
 .search-container button {
-  height: 2.9em;
-  width: 2.9em;
+  height: 2.9em; /* Should match input height */
+  width: 2.9em; /* Should match height to be a square */
   display: flex;
   background: rgb(76, 154, 93);
-  margin-left: 20px;
+  margin-left: 20px; /* Should match padding of containers */
   border: none;
   border-radius: 3px;
-  font-size: 1.7em;
   align-items: center;
   justify-content: center;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
@@ -104,7 +111,7 @@ h1, strong {
   fill: #fff;
 }
 
-/* Displayed items */
+/* Displayed items (each waste element result) */
 
 .results-container {
   margin-bottom: 50px;
@@ -113,8 +120,10 @@ h1, strong {
 .result-container {
   width: 100%;
   display: flex;
-  margin: 20px 0;
+  margin: 20px 0; /* Should match padding of containers */
 }
+
+/* Favourite button/star */
 
 .result-container button {
   border: none;
@@ -139,8 +148,10 @@ h1, strong {
 }
 
 .result-title, .result-body {
-  padding: 0 20px;
+  padding: 0 20px; /* Should match padding of containers */
 }
+
+/* Split for content is 40 title and 60 body */
 
 .result-title {
   width: 40%;
@@ -154,7 +165,7 @@ h1, strong {
   margin-bottom: 15px
 }
 
-/* Favourites styling */
+/* Favourites section styling */
 
 .favourites-container {
   background: rgba(76, 154, 93, 0.05);;
@@ -165,5 +176,250 @@ h1, strong {
   color: rgb(76, 154, 93);
   font-size: 2.5em;
   margin: 0;
+}
+
+/* Breakpoints for responsive design */
+
+/* Large screens */
+@media only screen and (max-width: 992px) {
+  /* Application-wide styles */
+  p {
+    font-size: 1.2em;
+  }
+
+  /* Header bar */
+
+  .title-container {
+    height: 110px;
+  }
+
+  .title {
+    font-size: 2.5em;
+  }
+
+  /* Container styling for sub-sections */
+
+  .search-container, .results-container,
+  .favourites-container, .loading-container {
+    padding: 15px;
+  }
+
+  /* Search bar */
+
+  /* Ensuring same font size for input and button for consistency */
+  .search-container input, .search-container button {
+    font-size: 1.3em;
+  }
+
+  .search-container input {
+    padding: 8px 8px 3px;
+    height: 2.5em;
+  }
+
+  /* Search button */
+
+  .search-container button {
+    height: 2.5em; /* Should match input height */
+    width: 2.5em; /* Should match height to be a square */
+    margin-left: 15px; /* Should match padding of containers */
+  }
+
+  .search-container svg {
+    height: 1.7em;
+    width: 1.7em;
+  }
+
+  /* Displayed items (each waste element result) */
+
+  .results-container {
+    margin-bottom: 30px;
+  }
+
+  .result-container {
+    margin: 15px 0; /* Should match padding of containers */
+  }
+
+  /* Favourite button/star */
+
+  .star {
+    height: 22px;
+    width: 22px;
+  }
+
+  .result-title, .result-body {
+    padding: 0 15px; /* Should match padding of containers */
+  }
+
+  .result-body li {
+    margin-bottom: 10px
+  }
+
+  /* Favourites section styling */
+
+  .favourites-container h1 {
+    font-size: 1.8em;
+  }
+}
+
+/* Medium screens */
+@media only screen and (max-width: 768px) {
+  /* Application-wide styles */
+  p {
+    font-size: 1em;
+  }
+
+  /* Header bar */
+
+  .title-container {
+    height: 70px;
+  }
+
+  .title {
+    font-size: 1.7em;
+  }
+
+  /* Container styling for sub-sections */
+
+  .search-container, .results-container,
+  .favourites-container, .loading-container {
+    padding: 10px;
+  }
+
+  /* Search bar */
+
+  /* Ensuring same font size for input and button for consistency */
+  .search-container input, .search-container button {
+    font-size: 1.1em;
+  }
+
+  .search-container input {
+    padding: 3px 8px 1px;
+    height: 2.2em;
+  }
+
+  /* Search button */
+
+  .search-container button {
+    height: 2.2em; /* Should match input height */
+    width: 2.2em; /* Should match height to be a square */
+    margin-left: 10px; /* Should match padding of containers */
+  }
+
+  .search-container svg {
+    height: 1.3em;
+    width: 1.3em;
+  }
+
+  /* Displayed items (each waste element result) */
+
+  .results-container {
+    margin-bottom: 10px;
+  }
+
+  .result-container {
+    margin: 10px 0; /* Should match padding of containers */
+  }
+
+  /* Favourite button/star */
+
+  .star {
+    height: 20px;
+    width: 20px;
+  }
+
+  .result-title, .result-body {
+    padding: 0 10px; /* Should match padding of containers */
+  }
+
+  .result-body li {
+    margin-bottom: 8px
+  }
+
+  /* Favourites section styling */
+
+  .favourites-container h1 {
+    font-size: 1.5em;
+  }
+}
+
+/* Small screens */
+@media only screen and (max-width: 576px) {
+  /* Application-wide styles */
+  p {
+    font-size: 1em;
+  }
+
+  /* Header bar */
+
+  .title-container {
+    height: 40px;
+  }
+
+  .title {
+    font-size: 1.2em;
+  }
+
+  /* Container styling for sub-sections */
+
+  .search-container, .results-container,
+  .favourites-container, .loading-container {
+    padding: 5px;
+  }
+
+  /* Search bar */
+
+  /* Ensuring same font size for input and button for consistency */
+  .search-container input, .search-container button {
+    font-size: 1em;
+  }
+
+  .search-container input {
+    padding: 1px 8px 1px;
+    height: 2em;
+  }
+
+  /* Search button */
+
+  .search-container button {
+    height: 2em; /* Should match input height */
+    width: 2em; /* Should match height to be a square */
+    margin-left: 5px; /* Should match padding of containers */
+  }
+
+  .search-container svg {
+    height: 1.1em;
+    width: 1.1em;
+  }
+
+  /* Displayed items (each waste element result) */
+
+  .results-container {
+    margin-bottom: 10px;
+  }
+
+  .result-container {
+    margin: 5px 0; /* Should match padding of containers */
+  }
+
+  /* Favourite button/star */
+
+  .star {
+    height: 18px;
+    width: 18px;
+  }
+
+  .result-title, .result-body {
+    padding: 0 5px; /* Should match padding of containers */
+  }
+
+  .result-body li {
+    margin-bottom: 5px
+  }
+
+  /* Favourites section styling */
+
+  .favourites-container h1 {
+    font-size: 1.2em;
+  }
 }
 
